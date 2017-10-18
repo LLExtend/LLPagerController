@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="i4x-XK-kjT">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="zFD-Q8-wJO">
+            <objects>
+                <navigationController id="i4x-XK-kjT" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pDR-xA-9sg">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Lbx-K7-isi" kind="relationship" relationship="rootViewController" id="Kbo-Nc-Qmq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7VE-JB-Bmg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-399" y="232"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="gt8-RB-t6w">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yXf-SG-4Mx" sceneMemberID="firstResponder"/>
+                <viewController id="Lbx-K7-isi" customClass="ViewController" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Dp6-KF-eYY"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="93" y="226"/>
+        </scene>
+    </scenes>
+</document>
