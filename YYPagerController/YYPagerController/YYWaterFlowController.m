@@ -20,6 +20,11 @@ static NSString *const reuseIdentifier = @"collectionCell";
     [self initCollectionView];
 }
 
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    _collectionView.frame = self.view.bounds;
+}
+
 - (void)initCollectionView {
     YYWaterFlowLayout *flowLayout = [[YYWaterFlowLayout alloc] init];
     flowLayout.padding = 5;
@@ -44,7 +49,7 @@ static NSString *const reuseIdentifier = @"collectionCell";
 #pragma mark -- UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 500;
+    return 100;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

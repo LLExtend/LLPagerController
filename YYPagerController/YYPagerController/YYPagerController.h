@@ -10,6 +10,8 @@
 
 @interface YYPagerController : UIViewController
 
+@property (nonatomic ,copy) void (^titleButtonChangeClickBlock)(UIButton *fromButton, UIButton *toButton);
+
 /**
  * selectIndexSetting 默认选中索引
  */
@@ -28,17 +30,30 @@
  * *titleButtonFont        标题字体大小 默认[UIFont systemFontOfSize:15]
  * *titleButtonWidth       标题按钮的宽度 默认100
  * *titleScale             标题的字体缩放比例
+ * *titlePagerMargin       标题之间的间距 默认10
  * *isAutoFitWidth         是否开启自动计算按钮宽度 默认NO (isAutoFitWidth优先级高于titleButtonWidth,当*isAutoFitWidth=YES时，*titleButtonWidth设置失效)
- * *isOpenShade            是否开启字体渐变效果 默认YES
+ * *isOpenShade            是否开启字体渐变效果 默认NO
  */
 - (void)settingTitleButton:(void(^)(UIColor **normalColor ,
                                     UIColor **selectedColor ,
-                                    UIFont **titleButtonFont ,
-                                    CGFloat *titleButtonWidth ,
-                                    CGFloat *titleScale ,
-                                    BOOL *isAutoFitWidth ,
-                                    BOOL *isOpenShade
+                                    UIFont  **titleButtonFont ,
+                                    CGFloat  *titleButtonWidth ,
+                                    CGFloat  *titleScale ,
+                                    CGFloat  *titlePagerMargin ,
+                                    BOOL     *isAutoFitWidth ,
+                                    BOOL     *isOpenShade
                                     ))titleButtonPropertySetting;
+/**
+ * *backgroundColor        红点数据控件背景色
+ * *textColor              红点文本颜色 默认[UIColor orangeColor]
+ * *fontSize               红点文本大小 默认[UIFont systemFontOfSize:11]
+ * *isHidden               是否隐藏红点数据显示 默认YES
+*/
+- (void)settingDotTextLayer:(void(^)(UIColor **backgroundColor ,
+                                     UIColor **textColor ,
+                                     CGFloat  *fontSize ,
+                                     BOOL     *isHidden
+                                     ))dotTextLayerPropertySetting;
 
 /**
  * *underlineColor         字体下方指示器颜色 默认[UIColor purpleColor]
@@ -47,10 +62,19 @@
  * *isOpenStretch          是否开启指示器拉伸效果 默认YES
  */
 - (void)settingUnderline:(void(^)(UIColor **underlineColor ,
-                                  CGSize *underlineSize ,
-                                  BOOL *isShowUnderline,
-                                  BOOL *isOpenStretch
+                                  CGSize  *underlineSize ,
+                                  BOOL    *isShowUnderline,
+                                  BOOL    *isOpenStretch
                                   ))underlinePropertySetting;
+
+
+/// 刷新按钮上 扩展数据（未读标识）
+/// @param dotText 标识展示数据
+/// @param index 获取按钮下标
+- (void)refreshDotText:(NSString *)dotText index:(NSInteger)index;
+
+- (void)refreshDotText:(NSString *)dotText button:(UIButton *)button;
+
 
 @end
 
@@ -68,7 +92,7 @@
 
 
 @interface YYPagerConsts : NSObject
-/** 常量数 */
+///** 常量数 */
 UIKIT_EXTERN CGFloat const YYPagerMargin;
 
 /** 按钮tag附加值 */
