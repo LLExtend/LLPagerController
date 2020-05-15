@@ -32,7 +32,7 @@ static NSString *const reuseIdentifier = @"collectionCell";
     flowLayout.cellMaxHeight = 200;
     flowLayout.cellMinHeight = 100;
     
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, YYScreenWidth(), YYScreenHeight()-17-88-44) collectionViewLayout:flowLayout];
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, YYScreenWidth(), YYScreenHeight()) collectionViewLayout:flowLayout];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     //设置代理

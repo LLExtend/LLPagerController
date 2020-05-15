@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setupAllChildViewController];
     
     [self settingTitleScrollView:^(UIColor *__autoreleasing *titleScrollViewBackgroundColor,
                                    CGFloat *titleScrollViewHeight) {
@@ -39,7 +39,7 @@
         *titleButtonFont = [UIFont systemFontOfSize:16];
         *titleButtonWidth = YYScreenWidth() / 3;
         *titlePagerMargin = 20;
-//        *titleScale = .3;
+        *titleScale = .3;
         *isAutoFitWidth = NO;
         *isOpenShade = YES;
     }];
@@ -62,11 +62,9 @@
     }];
     
     [self settingSelectIndex:^(NSInteger *index) {
-        *index = 0;
+        *index = 1;
     }];
 
-    
-    [self setupAllChildViewController];
     
     __weak typeof(self)weakSelf = self;
     self.titleButtonChangeClickBlock = ^(UIButton *fromButton, UIButton *toButton) {
