@@ -44,7 +44,10 @@
         *isOpenShade = YES;
     }];
     
-    [self settingDotTextLayer:^(UIColor *__autoreleasing *backgroundColor, UIColor *__autoreleasing *textColor, CGFloat *fontSize, BOOL *isHidden) {
+    [self settingDotTextLayer:^(UIColor *__autoreleasing *backgroundColor,
+                                UIColor *__autoreleasing *textColor,
+                                CGFloat *fontSize,
+                                BOOL    *isHidden) {
         *isHidden = NO;
         *textColor = UIColor.blueColor;
         *backgroundColor = UIColor.lightGrayColor;
@@ -52,12 +55,14 @@
     
     //underlineSize设置底部underline指示器的长度，有默认值为按钮的宽度的百分之56  默认高度4
     [self settingUnderline:^(UIColor *__autoreleasing *underlineColor,
-                             CGSize *underlineSize,
-                             BOOL *isShowUnderline,
-                             BOOL *isOpenStretch) {
+                             YYPagerUnderlineSizeType *sizeType,
+                             CGSize  *underlineSize,
+                             BOOL    *isShowUnderline,
+                             BOOL    *isOpenStretch) {
         *underlineColor = [UIColor purpleColor];
         *isShowUnderline = YES;
         *isOpenStretch = YES;
+        *sizeType = YYPagerUnderlineSizeType_followTitleLabel;
         *underlineSize = CGSizeMake(30, 5);
     }];
     

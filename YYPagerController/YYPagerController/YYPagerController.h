@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger ,YYPagerUnderlineSizeType) {
+    YYPagerUnderlineSizeType_followButton = 0,
+    YYPagerUnderlineSizeType_followTitleLabel,
+    YYPagerUnderlineSizeType_underSize
+};
+
 @interface YYPagerController : UIViewController
 
 @property (nonatomic ,copy) void (^titleButtonChangeClickBlock)(UIButton *fromButton, UIButton *toButton);
@@ -21,8 +27,9 @@
  * *titleScrollViewBackgroundColor  titleScrollView背景色
  * *titleScrollViewHeight           titleScrollView的高度
  */
-- (void)settingTitleScrollView:(void(^)(UIColor **titleScrollViewBackgroundColor ,
-                                        CGFloat *titleScrollViewHeight))titleScrollViewPropertySetting ;
+- (void)settingTitleScrollView:(void(^)(UIColor **titleScrollViewBackgroundColor,
+                                        CGFloat  *titleScrollViewHeight
+                                        ))titleScrollViewPropertySetting;
 
 /**
  * *normalColor            标题字体未选中状态下颜色 默认[UIColor darkGrayColor]
@@ -62,9 +69,10 @@
  * *isOpenStretch          是否开启指示器拉伸效果 默认YES
  */
 - (void)settingUnderline:(void(^)(UIColor **underlineColor ,
-                                  CGSize  *underlineSize ,
-                                  BOOL    *isShowUnderline,
-                                  BOOL    *isOpenStretch
+                                  YYPagerUnderlineSizeType *sizeType,
+                                  CGSize   *underlineSize ,
+                                  BOOL     *isShowUnderline,
+                                  BOOL     *isOpenStretch
                                   ))underlinePropertySetting;
 
 
