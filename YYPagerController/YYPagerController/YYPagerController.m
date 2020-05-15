@@ -14,34 +14,25 @@ typedef struct {
     CGFloat b;
 } YYColorRGB;
 
-@interface YYPagerController () <UIScrollViewDelegate> {
+/** 按钮非选中颜色 */
+const UIColor  *YYButtonNormalColor;
 
-    /** 指示器颜色 */
-    UIColor *_proColor;
-    /** 标题字体 */
-    UIFont *_titleFont;
-    /** 字体缩放比例 */
-    CGFloat _titleScale;
-    /** 标题字体间间距 */
-    CGFloat _titlePagerMargin;
-    /** 标题按钮的宽度 */
-    CGFloat _titleButtonWidth;
+/** 按钮选中颜色 */
+const UIColor *YYButtonSelectedColor;
+
+@interface YYPagerController () <UIScrollViewDelegate> {
     
-    /** 标题按钮下划线的size */
-    CGSize _underlineSize;
-    /** sizeType */
-    YYPagerUnderlineSizeType _sizeType;
+    /** 按钮承载容器 配置项 */
+    YYTitleScrollViewCustomItem _titleScrollViewItem;
     
-    /** 标题背景色 */
-    UIColor *_titleScrollViewBgColor;
-    /** 标题ScrollView的高度 */
-    CGFloat _titleScrollViewHeight;
+    /** 按钮显示 配置项 */
+    YYTitleButtonCustomItem _titleButtonItem;
     
-    /** dot */
-    BOOL _isHiddenDot;
-    CGFloat _dotFontSize;
-    UIColor *_dotBackgroundColor;
-    UIColor *_dotTextColor;
+    /** 选择指示器 配置项 */
+    YYUnderLineCustomItem _underLineItem;
+    
+    /** 未读消息 视图配置项 */
+    YYNotReadDotCustomItem _dotItem;
     
     
     /* 上一次选择的按钮 */
@@ -53,15 +44,6 @@ typedef struct {
     /** 选中索引 */
     NSInteger _selectIndex;
     
-    /* 是否显示底部指示器 */
-    BOOL _isShowUnderline;
-    /* 是否加载弹簧动画 */
-    BOOL _isOpenStretch;
-    /* 是否开启渐变 */
-    BOOL _isOpenShade;
-    /** 是否开启自动计算按钮宽度 */
-    BOOL _isAutoFitWidth;
-    
     /**
      开始颜色,取值范围0~1
      */
@@ -71,11 +53,6 @@ typedef struct {
      */
     YYColorRGB _endRGB;
 }
-
-/** 正常标题颜色 */
-@property (nonatomic, strong) UIColor *norColor;
-/** 选中标题颜色 */
-@property (nonatomic, strong) UIColor *selColor;
 
 /* 标题滚动视图 */
 @property (nonatomic, strong) UIScrollView *titleScrollView;
@@ -90,21 +67,21 @@ typedef struct {
 @end
 
 
-// 计算标题居中需要的偏移量
+/// 计算标题居中需要的偏移量
 UIKIT_STATIC_INLINE CGFloat YYValueBorder (CGFloat underBorder,
                                            CGFloat topBorder) {
     underBorder = (underBorder < 0 ? 0 : underBorder);
     return underBorder > topBorder ? topBorder : underBorder;
 }
 
-// CGFloat变量为负数的处理
+/// CGFloat变量为负数的处理
 UIKIT_STATIC_INLINE CGFloat YYUnderBorder(CGFloat underBorder) {
     return underBorder < 0 ? 0 : underBorder;
 }
 
-// 当标题按钮的宽度在外界被误设置为0时的处理（默认值100）
-// titleButtons:按钮个数 widthValue:设置的宽度
-// 只有在*isAutoFitWidth=NO & *titleButtonWidth = 0时生效
+/// 当标题按钮的宽度在外界被误设置为0时的处理（默认值100）
+/// titleButtons:按钮个数 widthValue:设置的宽度
+/// 只有在*isAutoFitWidth=NO & *titleButtonWidth = 0时生效
 UIKIT_STATIC_INLINE CGFloat YYTitleWidthHandle(CGFloat titleButtons,
                                                CGFloat widthValue) {
     CGFloat customW = 80;
@@ -124,7 +101,6 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
                                                UIButton *followButton) {
     CGFloat frameX = 0;
     CGFloat frameW = 0;
-    CGFloat frameY = CGRectGetHeight(followButton.frame) - underlineSize.height - 1;
     CGFloat frameH = 0;
     
     switch (sizeType) {
@@ -148,6 +124,7 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
             break;
         }
     }
+    CGFloat frameY = CGRectGetHeight(followButton.frame) - frameH - 1;
     CGRect frame = CGRectMake(frameX, frameY, frameW, frameH);
     return [NSValue valueWithCGRect:frame];
 }
@@ -177,8 +154,8 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
     
     //设置标题和内容的尺寸
     CGFloat statusHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat topY = (self.navigationController.navigationBarHidden == NO) ? YYNormalTitleViewH + statusHeight : statusHeight;
-    CGFloat topHeight = _titleScrollViewHeight;
+    CGFloat topY = (self.navigationController.navigationBarHidden == NO) ? 44 + statusHeight : statusHeight;
+    CGFloat topHeight = _titleScrollViewItem.titleScrollViewHeight;
     
     self.titleScrollView.frame = CGRectMake(0, topY, YYScreenSize().width, topHeight);
     self.contentScrollView.frame = CGRectMake(0, topY + topHeight, YYScreenSize().width, YYScreenSize().height - (topY + topHeight));
@@ -187,52 +164,18 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
 
 #pragma mark - 初始化默认配置
 - (void)setupConfigerSetting {
+    YYButtonNormalColor = UIColor.darkGrayColor;
+    YYButtonSelectedColor = UIColor.orangeColor;
     
-    // 标题View背景色（默认标题背景色为白色）
-    _titleScrollViewBgColor = [UIColor whiteColor];
-    
-    // 标题未选中颜色（默认未选中状态下字体颜色为黑色）
-    _norColor = [UIColor darkGrayColor];
-    
-    // 标题选中颜色（默认选中状态下字体颜色为桔色）
-    _selColor = [UIColor orangeColor];
-    
-    //滚动条颜色（默认为标题选中颜色）
-    _proColor = [UIColor purpleColor];
-    
-    // 字体尺寸
-    _titleFont = [UIFont systemFontOfSize:15];
-    
-    // 标题按钮的宽度
-    _titleButtonWidth = 100;
-    
-    // 是否开启标题下部Pregress指示器
-    _isShowUnderline = YES;
-    
-    // 是否开启指示器拉伸效果
-    _isOpenStretch = YES;
-    
-    // 是否开启字体渐变
-    _isOpenShade = NO;
-    
-    // 是否自动计算标题按钮的宽度
-    _isAutoFitWidth = NO;
-    
-    // 按钮间间距 开启 _isAutoFitWidth==YES 后生效
-    _titlePagerMargin = 10;
     _selectIndex = 0;
-    _titleScrollViewHeight = 50;
-    
-    _isHiddenDot = YES;
-    _dotFontSize = 11;
-    
-    _startRGB = [self generateColorRGBWithColor:_norColor];
-    _endRGB = [self generateColorRGBWithColor:_selColor];
+
+    _startRGB = [self generateColorRGBWithColor:_titleButtonItem.normalColor ?: YYButtonNormalColor];
+    _endRGB = [self generateColorRGBWithColor:_titleButtonItem.selectedColor ?: YYButtonSelectedColor];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    self.titleScrollView.backgroundColor = _titleScrollViewBgColor;
+    self.titleScrollView.backgroundColor = _titleScrollViewItem.titleScrollViewBackgroundColor ?: UIColor.whiteColor;
     [self.view addSubview:self.titleScrollView];
     [self.view addSubview:self.contentScrollView];
     [self setupUI];
@@ -247,40 +190,40 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
     __block CGFloat buttonX = 0;
     __block CGFloat buttonW = 0;
     CGFloat buttonY = 0;
-    CGFloat buttonH = _titleScrollViewHeight;
+    CGFloat buttonH = _titleScrollViewItem.titleScrollViewHeight;
 
     [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         // 初始化 标题按钮
         UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [titleButton setTitle:obj.title forState:UIControlStateNormal];
-        [titleButton setTitleColor:self.norColor forState:UIControlStateNormal];
+        [titleButton setTitleColor:_titleButtonItem.normalColor ?: YYButtonNormalColor forState:UIControlStateNormal];
         [titleButton addTarget:self action:@selector(titleButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         titleButton.backgroundColor = [UIColor clearColor];
-        titleButton.titleLabel.font = (!_titleFont) ? YYTitleFont : _titleFont;
+        titleButton.titleLabel.font = _titleButtonItem.titleButtonFont ?: [UIFont systemFontOfSize:15];
         titleButton.tag = idx + YYButtonTagValue;
         [self.titleScrollView addSubview:titleButton];
         [self.titleButtonArray addObject:titleButton];
         
-        if (_isAutoFitWidth) {
+        if (_titleButtonItem.isAutoFitWidth) {
             [titleButton sizeToFit];
-            buttonX = buttonX + buttonW + _titlePagerMargin;
-            buttonW = titleButton.bounds.size.width + _titlePagerMargin;
+            buttonX = buttonX + buttonW + _titleButtonItem.titlePagerMargin;
+            buttonW = titleButton.bounds.size.width + _titleButtonItem.titlePagerMargin;
         } else {
             buttonX = idx * buttonW;
-            buttonW = YYTitleWidthHandle(childControllerCount, _titleButtonWidth);
+            buttonW = YYTitleWidthHandle(childControllerCount, _titleButtonItem.titleButtonWidth);
         }
         titleButton.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
         
         // 进度线 frame 处理
-        NSValue *underlineRectValue = YYUnderLineFrame(_sizeType, _underlineSize, titleButton);
+        NSValue *underlineRectValue = YYUnderLineFrame(_underLineItem.sizeType, _underLineItem.underlineSize, titleButton);
         [self.underlineFrames addObject:underlineRectValue];
 
-        if (!_isHiddenDot) {
+        if (!_dotItem.isHidden) {
             
             CATextLayer *textLayer = CATextLayer.layer;
             
             textLayer.string = [NSString stringWithFormat:@"%ld",titleButton.tag - YYButtonTagValue];
-            textLayer.fontSize = _dotFontSize;
+            textLayer.fontSize = _dotItem.dotFontSize;//_dotFontSize;
             
             // 设置frame
             [self autolayoutFrameWithButton:titleButton textlayer:textLayer];
@@ -289,23 +232,23 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
             textLayer.alignmentMode = kCAAlignmentCenter;
             textLayer.truncationMode = kCATruncationEnd;
             textLayer.contentsScale = UIScreen.mainScreen.scale;
-            textLayer.backgroundColor = _dotBackgroundColor ? _dotBackgroundColor.CGColor : UIColor.orangeColor.CGColor ;
-            textLayer.foregroundColor = _dotTextColor ? _dotTextColor.CGColor : UIColor.whiteColor.CGColor;
+            textLayer.backgroundColor = _dotItem.backgroundColor ? _dotItem.backgroundColor.CGColor:UIColor.orangeColor.CGColor;
+            textLayer.foregroundColor = _dotItem.textColor ? _dotItem.textColor.CGColor:UIColor.whiteColor.CGColor;
             [titleButton.layer addSublayer:textLayer];
         }
     }];
     
     // 设置标题是否可以滚动
-    _titleScrollView.contentSize = CGSizeMake(_isAutoFitWidth ? buttonX + buttonW + _titlePagerMargin : childControllerCount * buttonW, 0);
+    _titleScrollView.contentSize = CGSizeMake(_titleButtonItem.isAutoFitWidth ? buttonX + buttonW + _titleButtonItem.titlePagerMargin : childControllerCount * buttonW, 0);
     
     // 设置滚动范围
     _contentScrollView.contentSize = CGSizeMake(childControllerCount * YYScreenSize().width, 0);
     
-    if (_isShowUnderline) {
+    if (_underLineItem.isShowUnderline) {
         CGRect underlineFrame = [self.underlineFrames[0] CGRectValue];
         _pagerUnderline = [[YYPagerUnderline alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(underlineFrame), _titleScrollView.contentSize.width, CGRectGetHeight(underlineFrame))];
         _pagerUnderline.itemFrames = self.underlineFrames;
-        _pagerUnderline.color = _proColor.CGColor;
+        _pagerUnderline.color = _underLineItem.underlineColor ? _underLineItem.underlineColor.CGColor :UIColor.purpleColor.CGColor;
         _pagerUnderline.backgroundColor = [UIColor clearColor];
         [_titleScrollView addSubview:_pagerUnderline];
     }
@@ -318,7 +261,7 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
 }
 
 - (void)autolayoutFrameWithButton:(UIButton *)button textlayer:(CATextLayer *)textLayer {
-    textLayer.hidden = _isHiddenDot;
+    textLayer.hidden = _dotItem.isHidden;//_isHiddenDot;
     if ([textLayer.string length] == 0) {
         textLayer.hidden = YES;
         return;
@@ -326,7 +269,7 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
     
     CGFloat scale = 1;
     if (!CGAffineTransformIsIdentity(button.transform)) {
-        scale = (1 + _titleScale);
+        scale = (1 + _titleButtonItem.titleScale);
     }
     
     CGSize textSize = [textLayer.string sizeWithAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:textLayer.fontSize]}];
@@ -339,7 +282,7 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
     CGFloat textLayerY = (buttonOriHeight/2 - textSize.height/2 - textMargin);
     CGFloat textLayerW = MIN((textSize.width + textMargin), buttonOriWidth/2);
     CGFloat textLayerH = (textSize.height);
-    if (_isAutoFitWidth) {
+    if (_titleButtonItem.isAutoFitWidth) {
         textLayerX = buttonOriWidth - textMargin;
     } else {
         CGFloat x = buttonOriWidth / 2 + titleSize.width / 2;
@@ -387,13 +330,12 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
     [self selectButton:button];
 }
 
-#pragma mark - 选中标题
 - (void)selectButton:(UIButton *)button {
     if (button == _lastSelectButton) return;
     
     _lastSelectButton.transform = CGAffineTransformIdentity;
-    [_lastSelectButton setTitleColor:self.norColor forState:UIControlStateNormal];
-    [button setTitleColor:self.selColor forState:UIControlStateNormal];
+    [_lastSelectButton setTitleColor:_titleButtonItem.normalColor ?: YYButtonNormalColor forState:UIControlStateNormal];
+    [button setTitleColor:_titleButtonItem.selectedColor ?: YYButtonSelectedColor forState:UIControlStateNormal];
     
     // 标题居中
     CGFloat offsetX = YYValueBorder(button.center.x - YYScreenSize().width * 0.5, _titleScrollView.contentSize.width - YYScreenSize().width);
@@ -421,7 +363,7 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
             // 点击按钮时 缩放功能 单独处理，不受scrollViewDidScroll:处理
             if (!_pagerUnderline.isStretch) {
                 _lastSelectButton.transform = CGAffineTransformIdentity;
-                button.transform = CGAffineTransformMakeScale(1 + _titleScale, 1 + _titleScale);
+                button.transform = CGAffineTransformMakeScale(1 + _titleButtonItem.titleScale, 1 + _titleButtonItem.titleScale);
             }
             
             _lastSelectButton = button;
@@ -435,7 +377,7 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
     _pagerUnderline.progress = YYUnderBorder(offsetx) / YYScreenSize().width;
 }
 
-//添加控制器View
+// 添加控制器View
 - (void)addChildViewForIndex:(NSInteger)i {
     UIViewController *vc = self.childViewControllers[i];
     if (vc.view.superview) return;
@@ -453,7 +395,7 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     //是否有拉伸
-    _pagerUnderline.isStretch = _isOpenStretch;
+    _pagerUnderline.isStretch = _underLineItem.isOpenStretch;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -480,13 +422,13 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
     CGFloat scaleL = 1 - scaleR;
     
     //缩放尺寸限定
-    if (_titleScale > 0 && _titleScale < 1) {
-        leftButton.transform = CGAffineTransformMakeScale(scaleL * _titleScale + 1, scaleL * _titleScale + 1);
-        rightButton.transform = CGAffineTransformMakeScale(scaleR * _titleScale + 1, scaleR * _titleScale + 1);
+    if (_titleButtonItem.titleScale > 0 && _titleButtonItem.titleScale < 1) {
+        leftButton.transform = CGAffineTransformMakeScale(scaleL * _titleButtonItem.titleScale + 1, scaleL * _titleButtonItem.titleScale + 1);
+        rightButton.transform = CGAffineTransformMakeScale(scaleR * _titleButtonItem.titleScale + 1, scaleR * _titleButtonItem.titleScale + 1);
     }
     
     // 开启渐变
-    if (_isOpenShade) {
+    if (_titleButtonItem.isOpenShade) {
         //颜色渐变
         CGFloat r = _endRGB.r - _startRGB.r;
         CGFloat g = _endRGB.g - _startRGB.g;
@@ -506,82 +448,31 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
     }
 }
 
-- (void)settingTitleScrollView:(void (^)(UIColor *__autoreleasing *,
-                                         CGFloat *))titleScrollViewPropertySetting {
-    UIColor *titleScrollViewBgColor;
-    if (titleScrollViewPropertySetting) {
-        titleScrollViewPropertySetting(&titleScrollViewBgColor,
-                                       &_titleScrollViewHeight);
-        _titleScrollViewBgColor = titleScrollViewBgColor;
+- (void)settingTitleScrollViewCustomItem:(void (^)(YYTitleScrollViewCustomItem *))titleScrollViewCustomItemBlock {
+    if (titleScrollViewCustomItemBlock) {
+        titleScrollViewCustomItemBlock(&_titleScrollViewItem);
     }
 }
 
-- (void)settingTitleButton:(void (^)(UIColor *__autoreleasing *,
-                                     UIColor *__autoreleasing *,
-                                     UIFont *__autoreleasing *,
-                                     CGFloat *,
-                                     CGFloat *,
-                                     CGFloat *,
-                                     BOOL *,
-                                     BOOL *))titleButtonPropertySetting {
-    UIColor *norColor;
-    UIColor *selColor;
-    UIFont *titleFont;
-    
-    if (titleButtonPropertySetting) {
-    titleButtonPropertySetting(&norColor,
-                               &selColor,
-                               &titleFont,
-                               &_titleButtonWidth,
-                               &_titleScale,
-                               &_titlePagerMargin,
-                               &_isAutoFitWidth,
-                               &_isOpenShade);
-        _norColor = norColor;
-        _selColor = selColor;
-        _titleFont = titleFont;
-        
-        _startRGB = [self generateColorRGBWithColor:norColor];
-        _endRGB = [self generateColorRGBWithColor:selColor];
+- (void)settingTitleButtonCustomItem:(void (^)(YYTitleButtonCustomItem *))titleButtonCustomItemBlock {
 
+    if (titleButtonCustomItemBlock) {
+        titleButtonCustomItemBlock(&_titleButtonItem);
+
+        _startRGB = [self generateColorRGBWithColor:_titleButtonItem.normalColor ?: YYButtonNormalColor];
+        _endRGB = [self generateColorRGBWithColor:_titleButtonItem.selectedColor ?: YYButtonSelectedColor];
     }
 }
 
-
-- (void)settingDotTextLayer:(void (^)(UIColor *__autoreleasing *,
-                                      UIColor *__autoreleasing *,
-                                      CGFloat *,
-                                      BOOL *))dotTextLayerPropertySetting {
-    UIColor *backgroundColor;
-    UIColor *textColor;
-    
-    if (dotTextLayerPropertySetting) {
-    dotTextLayerPropertySetting(&backgroundColor,
-                                &textColor,
-                                &_dotFontSize,
-                                &_isHiddenDot);
-
-        _dotBackgroundColor = backgroundColor;
-        _dotTextColor       = textColor;
+- (void)settingNotReadDotCustomItem:(void (^)(YYNotReadDotCustomItem *))notReadDotCustomItemBlock {
+    if (notReadDotCustomItemBlock) {
+        notReadDotCustomItemBlock(&_dotItem);
     }
 }
 
-- (void)settingUnderline:(void (^)(UIColor *__autoreleasing *,
-                                   YYPagerUnderlineSizeType *,
-                                   CGSize *,
-                                   BOOL *,
-                                   BOOL *))underlinePropertySetting {
-    //如果隐藏指示器则返回
-    if (!_isShowUnderline) return ;
-    
-    UIColor *underlineColor;
-    if (underlinePropertySetting) {
-        underlinePropertySetting(&underlineColor,
-                                 &_sizeType,
-                                 &_underlineSize,
-                                 &_isShowUnderline,
-                                 &_isOpenStretch);
-        _proColor = underlineColor;
+- (void)settingUnderLineCustomItem:(void (^)(YYUnderLineCustomItem *))underLineCustomItemBlock {
+    if (underLineCustomItemBlock) {
+        underLineCustomItemBlock(&_underLineItem);
     }
 }
 
@@ -717,17 +608,9 @@ UIKIT_STATIC_INLINE NSValue * YYUnderLineFrame(
 @end
 
 @implementation YYPagerConsts
-/** 常量数 */
-CGFloat const YYPagerMargin = 10;
 
 /** 按钮tag附加值 */
 NSInteger const YYButtonTagValue = 0x808;
-
-/** 默认标题栏高度 */
-CGFloat const YYNormalTitleViewH = 44;
-
-/** 下划线默认高度 */
-CGFloat const YYUnderLineH = 4;
 
 CGSize YYScreenSize() {
     static CGSize size;

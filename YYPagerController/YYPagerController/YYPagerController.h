@@ -14,67 +14,112 @@ typedef NS_ENUM(NSInteger ,YYPagerUnderlineSizeType) {
     YYPagerUnderlineSizeType_underSize
 };
 
+typedef struct  {
+    UIColor *titleScrollViewBackgroundColor;
+    CGFloat  titleScrollViewHeight;
+} YYTitleScrollViewCustomItem;
+
+CG_INLINE YYTitleScrollViewCustomItem
+YYTitleScrollViewCustomItemMake(UIColor *titleScrollViewBackgroundColor,
+                                CGFloat  titleScrollViewHeight) {
+    YYTitleScrollViewCustomItem item;
+    item.titleScrollViewBackgroundColor = titleScrollViewBackgroundColor;
+    item.titleScrollViewHeight          = titleScrollViewHeight;
+    return item;
+}
+
+typedef struct  {
+    YYPagerUnderlineSizeType sizeType; // size大小类型
+    UIColor *underlineColor;  //字体下方指示器颜色 默认[UIColor purpleColor]
+    CGSize   underlineSize;   //字体下方指示器大小
+    BOOL     isShowUnderline; //是否开启字体下方指示器 默认YES
+    BOOL     isOpenStretch;   //是否开启指示器拉伸效果 默认YES
+} YYUnderLineCustomItem;
+
+CG_INLINE YYUnderLineCustomItem
+YYUnderLineCustomItemMake(YYPagerUnderlineSizeType sizeType,
+                          BOOL      isShowUnderline,
+                          BOOL      isOpenStretch,
+                          UIColor   *underlineColor,
+                          CGSize    underlineSize) {
+    YYUnderLineCustomItem item;
+    item.sizeType           = sizeType;
+    item.isShowUnderline    = isShowUnderline;
+    item.isOpenStretch      = isOpenStretch;
+    item.underlineColor     = underlineColor;
+    item.underlineSize      = underlineSize;
+    return item;
+}
+
+typedef struct {
+    BOOL     isHidden;
+    CGFloat  dotFontSize;
+    UIColor *backgroundColor;
+    UIColor *textColor;
+} YYNotReadDotCustomItem;
+
+CG_INLINE YYNotReadDotCustomItem
+YYNotReadDotCustomItemMake(BOOL isHidden,
+                           CGFloat dotFontSize,
+                           UIColor *backgroundColor,
+                           UIColor *textColor) {
+    YYNotReadDotCustomItem item;
+    item.isHidden        = isHidden;
+    item.dotFontSize     = dotFontSize;
+    item.backgroundColor = backgroundColor;
+    item.textColor       = textColor;
+    return item;
+}
+
+typedef struct {
+    UIColor *normalColor;     //标题字体未选中状态下颜色 默认[UIColor darkGrayColor]
+    UIColor *selectedColor;   //标题字体选中状态下颜色 默认[UIColor orangeColor]
+    UIFont  *titleButtonFont; //标题字体大小 默认[UIFont systemFontOfSize:15]
+    
+    CGFloat  titleScale;      //标题的字体缩放比例 默认不缩放为0。值区间[0-1]
+    CGFloat  titlePagerMargin;//标题之间的间距 默认10
+    CGFloat  titleButtonWidth;//标题按钮的宽度 默认100
+    BOOL     isOpenShade;     //是否开启字体渐变效果 默认NO
+    BOOL     isAutoFitWidth;  //是否开启自动计算按钮宽度 默认NO (isAutoFitWidth优先级高于titleButtonWidth,当isAutoFitWidth=YES时，titleButtonWidth设置失效)
+    
+} YYTitleButtonCustomItem;
+
+CG_INLINE YYTitleButtonCustomItem
+YYTitleButtonCustomItemMake(BOOL    isAutoFitWidth,
+                            CGFloat titleButtonWidth,
+                            CGFloat titlePagerMargin) {
+    YYTitleButtonCustomItem item;
+    item.isAutoFitWidth   = isAutoFitWidth;
+    item.titleButtonWidth = titleButtonWidth;
+    item.titlePagerMargin = titlePagerMargin;
+    return item;
+}
+
+
 @interface YYPagerController : UIViewController
 
+/// 按钮改变block
 @property (nonatomic ,copy) void (^titleButtonChangeClickBlock)(UIButton *fromButton, UIButton *toButton);
 
-/**
- * selectIndexSetting 默认选中索引
- */
-- (void)settingSelectIndex:(void(^)(NSInteger *index))selectIndexSetting ;
+/// 指定选中项
+/// @param selectIndexSetting 回调配置（选中索引）
+- (void)settingSelectIndex:(void(^)(NSInteger *index))selectIndexSetting;
 
-/**
- * *titleScrollViewBackgroundColor  titleScrollView背景色
- * *titleScrollViewHeight           titleScrollView的高度
- */
-- (void)settingTitleScrollView:(void(^)(UIColor **titleScrollViewBackgroundColor,
-                                        CGFloat  *titleScrollViewHeight
-                                        ))titleScrollViewPropertySetting;
+/// 按钮承载视图配置
+/// @param titleScrollViewCustomItemBlock 配置回调
+- (void)settingTitleScrollViewCustomItem:(void (^)(YYTitleScrollViewCustomItem *item))titleScrollViewCustomItemBlock;
 
-/**
- * *normalColor            标题字体未选中状态下颜色 默认[UIColor darkGrayColor]
- * *selectedColor          标题字体选中状态下颜色 默认[UIColor orangeColor]
- * *titleButtonFont        标题字体大小 默认[UIFont systemFontOfSize:15]
- * *titleButtonWidth       标题按钮的宽度 默认100
- * *titleScale             标题的字体缩放比例
- * *titlePagerMargin       标题之间的间距 默认10
- * *isAutoFitWidth         是否开启自动计算按钮宽度 默认NO (isAutoFitWidth优先级高于titleButtonWidth,当*isAutoFitWidth=YES时，*titleButtonWidth设置失效)
- * *isOpenShade            是否开启字体渐变效果 默认NO
- */
-- (void)settingTitleButton:(void(^)(UIColor **normalColor ,
-                                    UIColor **selectedColor ,
-                                    UIFont  **titleButtonFont ,
-                                    CGFloat  *titleButtonWidth ,
-                                    CGFloat  *titleScale ,
-                                    CGFloat  *titlePagerMargin ,
-                                    BOOL     *isAutoFitWidth ,
-                                    BOOL     *isOpenShade
-                                    ))titleButtonPropertySetting;
-/**
- * *backgroundColor        红点数据控件背景色
- * *textColor              红点文本颜色 默认[UIColor orangeColor]
- * *fontSize               红点文本大小 默认[UIFont systemFontOfSize:11]
- * *isHidden               是否隐藏红点数据显示 默认YES
-*/
-- (void)settingDotTextLayer:(void(^)(UIColor **backgroundColor ,
-                                     UIColor **textColor ,
-                                     CGFloat  *fontSize ,
-                                     BOOL     *isHidden
-                                     ))dotTextLayerPropertySetting;
+/// 按钮配置
+/// @param titleButtonCustomItemBlock 配置回调
+- (void)settingTitleButtonCustomItem:(void (^)(YYTitleButtonCustomItem *item))titleButtonCustomItemBlock;
 
-/**
- * *underlineColor         字体下方指示器颜色 默认[UIColor purpleColor]
- * *underlineSize          字体下方指示器大小
- * *isShowUnderline        是否开启字体下方指示器 默认YES
- * *isOpenStretch          是否开启指示器拉伸效果 默认YES
- */
-- (void)settingUnderline:(void(^)(UIColor **underlineColor ,
-                                  YYPagerUnderlineSizeType *sizeType,
-                                  CGSize   *underlineSize ,
-                                  BOOL     *isShowUnderline,
-                                  BOOL     *isOpenStretch
-                                  ))underlinePropertySetting;
+/// 未读消息视图配置
+/// @param notReadDotCustomItemBlock 配置回调
+- (void)settingNotReadDotCustomItem:(void (^)(YYNotReadDotCustomItem *item))notReadDotCustomItemBlock;
 
+/// 选择指示器配置
+/// @param underLineCustomItemBlock 配置回调
+- (void)settingUnderLineCustomItem:(void (^)(YYUnderLineCustomItem *item))underLineCustomItemBlock;
 
 /// 刷新按钮上 扩展数据（未读标识）
 /// @param dotText 标识展示数据
@@ -100,23 +145,12 @@ typedef NS_ENUM(NSInteger ,YYPagerUnderlineSizeType) {
 
 
 @interface YYPagerConsts : NSObject
-///** 常量数 */
-UIKIT_EXTERN CGFloat const YYPagerMargin;
+
 
 /** 按钮tag附加值 */
 UIKIT_EXTERN NSInteger const YYButtonTagValue;
 
-/** 默认标题栏高度 */
-UIKIT_EXTERN CGFloat const YYNormalTitleViewH;
-
-/** 下划线默认高度 */
-UIKIT_EXTERN CGFloat const YYUnderLineH;
-
-
 CGSize YYScreenSize(void);
-
-/** 默认标题字体 */
-#define YYTitleFont [UIFont systemFontOfSize:15]
 
 //色值
 #define YYRGBA(r,g,b,a) [UIColor colorWithRed:r green:g blue:b alpha:a]

@@ -19,51 +19,33 @@
     [super viewDidLoad];
     [self setupAllChildViewController];
     
-    [self settingTitleScrollView:^(UIColor *__autoreleasing *titleScrollViewBackgroundColor,
-                                   CGFloat *titleScrollViewHeight) {
-        *titleScrollViewBackgroundColor = [UIColor whiteColor];
-        *titleScrollViewHeight = 55;
+
+    [self settingTitleScrollViewCustomItem:^(YYTitleScrollViewCustomItem *item) {
+        *item = YYTitleScrollViewCustomItemMake(UIColor.whiteColor, 55);
     }];
     
-    //titleScale范围在0到1之间  <0 或者 >1 则默认不缩放 默认设置titleScale就开启缩放，不设置则关闭
-    [self settingTitleButton:^(UIColor *__autoreleasing *normalColor,
-                               UIColor *__autoreleasing *selectedColor,
-                               UIFont  *__autoreleasing *titleButtonFont,
-                               CGFloat *titleButtonWidth,
-                               CGFloat *titleScale,
-                               CGFloat *titlePagerMargin,
-                               BOOL    *isAutoFitWidth,
-                               BOOL    *isOpenShade) {
-        *normalColor = [UIColor blackColor];
-        *selectedColor = [UIColor orangeColor];
-        *titleButtonFont = [UIFont systemFontOfSize:16];
-        *titleButtonWidth = YYScreenWidth() / 3;
-        *titlePagerMargin = 20;
-        *titleScale = .3;
-        *isAutoFitWidth = NO;
-        *isOpenShade = YES;
+    
+    [self settingTitleButtonCustomItem:^(YYTitleButtonCustomItem *item) {
+        YYTitleButtonCustomItem titleButtonItem = YYTitleButtonCustomItemMake(YES, YYScreenSize().width / 3, 20);
+        titleButtonItem.normalColor = UIColor.blackColor;
+        titleButtonItem.selectedColor = UIColor.orangeColor;
+        titleButtonItem.titleButtonFont = [UIFont systemFontOfSize:16];
+        titleButtonItem.titleScale = .3;
+        titleButtonItem.isOpenShade = YES;
+        *item = titleButtonItem;
+    }];
+
+//    YYNotReadDotCustomItem dotItem;
+//    dotItem.isHidden = NO;
+//    dotItem.dotFontSize = 11;
+//    dotItem.backgroundColor = UIColor.blueColor;
+    
+    [self settingNotReadDotCustomItem:^(YYNotReadDotCustomItem *item) {
+        *item = YYNotReadDotCustomItemMake(NO, 11, UIColor.lightGrayColor, UIColor.blueColor);
     }];
     
-    [self settingDotTextLayer:^(UIColor *__autoreleasing *backgroundColor,
-                                UIColor *__autoreleasing *textColor,
-                                CGFloat *fontSize,
-                                BOOL    *isHidden) {
-        *isHidden = NO;
-        *textColor = UIColor.blueColor;
-        *backgroundColor = UIColor.lightGrayColor;
-    }];
-    
-    //underlineSize设置底部underline指示器的长度，有默认值为按钮的宽度的百分之56  默认高度4
-    [self settingUnderline:^(UIColor *__autoreleasing *underlineColor,
-                             YYPagerUnderlineSizeType *sizeType,
-                             CGSize  *underlineSize,
-                             BOOL    *isShowUnderline,
-                             BOOL    *isOpenStretch) {
-        *underlineColor = [UIColor purpleColor];
-        *isShowUnderline = YES;
-        *isOpenStretch = YES;
-        *sizeType = YYPagerUnderlineSizeType_followTitleLabel;
-        *underlineSize = CGSizeMake(30, 5);
+    [self settingUnderLineCustomItem:^(YYUnderLineCustomItem *item) {
+        *item = YYUnderLineCustomItemMake(YYPagerUnderlineSizeType_followTitleLabel, YES, YES, UIColor.purpleColor, CGSizeMake(30, 5));
     }];
     
     [self settingSelectIndex:^(NSInteger *index) {
