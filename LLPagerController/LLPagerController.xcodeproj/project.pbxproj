@@ -90,7 +90,7 @@
 		04195D9C1F97339900F37AF3 = {
 			isa = PBXGroup;
 			children = (
-				04195DA71F97339900F37AF3 /* YYPagerController */,
+				04195DA71F97339900F37AF3 /* LLPagerController */,
 				04195DC01F97339900F37AF3 /* LLPagerControllerTests */,
 				04195DCB1F97339900F37AF3 /* LLPagerControllerUITests */,
 				04195DA61F97339900F37AF3 /* Products */,
@@ -107,7 +107,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		04195DA71F97339900F37AF3 /* YYPagerController */ = {
+		04195DA71F97339900F37AF3 /* LLPagerController */ = {
 			isa = PBXGroup;
 			children = (
 				04195DDA1F97345200F37AF3 /* LLPagerController.h */,
@@ -126,7 +126,7 @@
 				04195DB61F97339900F37AF3 /* Info.plist */,
 				04195DB71F97339900F37AF3 /* main.m */,
 			);
-			path = YYPagerController;
+			path = LLPagerController;
 			sourceTree = "<group>";
 		};
 		04195DC01F97339900F37AF3 /* LLPagerControllerTests */ = {
