@@ -1,6 +1,6 @@
 //
-//  YYWaterFlowController.h
-//  YYWeiBoPersonView
+//  LLWaterFlowController.h
+//  LLWeiBoPersonView
 //
 //  Created by MAC on 2017/10/18.
 //  Copyright © 2017年 MAC. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YYWaterFlowController : UIViewController
+@interface LLWaterFlowController : UIViewController
 
 @end
 
-@interface YYWaterFlowLayout : UICollectionViewLayout
+@interface LLWaterFlowLayout : UICollectionViewLayout
 
 //瀑布流的列数
 @property (nonatomic ,assign) NSInteger columnCount;
@@ -26,6 +26,6 @@
 //cell的最大高度，最大高度比最小高度小，以最小高度为准
 @property (nonatomic ,assign) NSInteger cellMaxHeight;
 
-CGFloat YYScreenWidth(void);
-CGFloat YYScreenHeight(void);
+CGFloat LLScreenWidth(void);
+CGFloat LLScreenHeight(void);
 @end

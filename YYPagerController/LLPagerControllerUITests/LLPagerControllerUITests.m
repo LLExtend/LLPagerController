@@ -1,6 +1,6 @@
 //
-//  YYPagerControllerUITests.m
-//  YYPagerControllerUITests
+//  LLPagerControllerUITests.m
+//  LLPagerControllerUITests
 //
 //  Created by MAC on 2017/10/18.
 //  Copyright © 2017年 MAC. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface YYPagerControllerUITests : XCTestCase
+@interface LLPagerControllerUITests : XCTestCase
 
 @end
 
-@implementation YYPagerControllerUITests
+@implementation LLPagerControllerUITests
 
 - (void)setUp {
     [super setUp];

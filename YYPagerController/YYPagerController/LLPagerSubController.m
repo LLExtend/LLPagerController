@@ -1,32 +1,32 @@
 //
-//  YYPagerSubController.m
-//  YYWeiBoPersonView
+//  LLPagerSubController.m
+//  LLWeiBoPersonView
 //
 //  Created by MAC on 2017/10/16.
 //  Copyright © 2017年 MAC. All rights reserved.
 //
 
-#import "YYPagerSubController.h"
-#import "YYWaterFlowController.h"
+#import "LLPagerSubController.h"
+#import "LLWaterFlowController.h"
 
-@interface YYPagerSubController ()
+@interface LLPagerSubController ()
 
 @end
 
-@implementation YYPagerSubController
+@implementation LLPagerSubController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupAllChildViewController];
     
 
-    [self settingTitleScrollViewCustomItem:^(YYTitleScrollViewCustomItem *item) {
-        *item = YYTitleScrollViewCustomItemMake(UIColor.whiteColor, 55);
+    [self settingTitleScrollViewCustomItem:^(LLTitleScrollViewCustomItem *item) {
+        *item = LLTitleScrollViewCustomItemMake(UIColor.whiteColor, 55);
     }];
     
     
-    [self settingTitleButtonCustomItem:^(YYTitleButtonCustomItem *item) {
-        YYTitleButtonCustomItem titleButtonItem = YYTitleButtonCustomItemMake(YES, YYScreenSize().width / 3, 20);
+    [self settingTitleButtonCustomItem:^(LLTitleButtonCustomItem *item) {
+        LLTitleButtonCustomItem titleButtonItem = LLTitleButtonCustomItemMake(YES, LLScreenSize().width / 3, 20);
         titleButtonItem.normalColor = UIColor.blackColor;
         titleButtonItem.selectedColor = UIColor.orangeColor;
         titleButtonItem.titleButtonFont = [UIFont systemFontOfSize:16];
@@ -35,17 +35,17 @@
         *item = titleButtonItem;
     }];
 
-//    YYNotReadDotCustomItem dotItem;
+//    LLNotReadDotCustomItem dotItem;
 //    dotItem.isHidden = NO;
 //    dotItem.dotFontSize = 11;
 //    dotItem.backgroundColor = UIColor.blueColor;
     
-    [self settingNotReadDotCustomItem:^(YYNotReadDotCustomItem *item) {
-        *item = YYNotReadDotCustomItemMake(NO, 11, UIColor.lightGrayColor, UIColor.blueColor);
+    [self settingNotReadDotCustomItem:^(LLNotReadDotCustomItem *item) {
+        *item = LLNotReadDotCustomItemMake(NO, 11, UIColor.lightGrayColor, UIColor.blueColor);
     }];
     
-    [self settingUnderLineCustomItem:^(YYUnderLineCustomItem *item) {
-        *item = YYUnderLineCustomItemMake(YYPagerUnderlineSizeType_followTitleLabel, YES, YES, UIColor.purpleColor, CGSizeMake(30, 5));
+    [self settingUnderLineCustomItem:^(LLUnderLineCustomItem *item) {
+        *item = LLUnderLineCustomItemMake(LLPagerUnderlineSizeType_followTitleLabel, YES, YES, UIColor.purpleColor, CGSizeMake(30, 5));
     }];
     
     [self settingSelectIndex:^(NSInteger *index) {
@@ -66,7 +66,7 @@
 - (void)setupAllChildViewController {
     NSArray *titles = @[@"关注",@"推荐",@"瀑布流布局",@"视频",@"热点",@"社会",@"中国好声音"];//  @[@"关注",@"推荐",@"视频",@"热点",@"社会",@"中国好声音",@"瀑布流布局"];
     [titles enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        UIViewController *vc = idx%2 ? [UIViewController new] : [YYWaterFlowController new];
+        UIViewController *vc = idx%2 ? [UIViewController new] : [LLWaterFlowController new];
         vc.title = titles[idx];
         vc.view.backgroundColor = RandColor;
         [self addChildViewController:vc];

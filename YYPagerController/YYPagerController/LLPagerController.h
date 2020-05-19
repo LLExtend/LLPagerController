@@ -1,6 +1,6 @@
 //
-//  YYPagerController.h
-//  YYPagerController
+//  LLPagerController.h
+//  LLPagerController
 //
 //  Created by MAC on 2017/10/18.
 //  Copyright © 2017年 MAC. All rights reserved.
@@ -8,41 +8,41 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger ,YYPagerUnderlineSizeType) {
-    YYPagerUnderlineSizeType_followButton = 0,
-    YYPagerUnderlineSizeType_followTitleLabel,
-    YYPagerUnderlineSizeType_underSize
+typedef NS_ENUM(NSInteger ,LLPagerUnderlineSizeType) {
+    LLPagerUnderlineSizeType_followButton = 0,
+    LLPagerUnderlineSizeType_followTitleLabel,
+    LLPagerUnderlineSizeType_underSize
 };
 
 typedef struct  {
     UIColor *titleScrollViewBackgroundColor;
     CGFloat  titleScrollViewHeight;
-} YYTitleScrollViewCustomItem;
+} LLTitleScrollViewCustomItem;
 
-CG_INLINE YYTitleScrollViewCustomItem
-YYTitleScrollViewCustomItemMake(UIColor *titleScrollViewBackgroundColor,
+CG_INLINE LLTitleScrollViewCustomItem
+LLTitleScrollViewCustomItemMake(UIColor *titleScrollViewBackgroundColor,
                                 CGFloat  titleScrollViewHeight) {
-    YYTitleScrollViewCustomItem item;
+    LLTitleScrollViewCustomItem item;
     item.titleScrollViewBackgroundColor = titleScrollViewBackgroundColor;
     item.titleScrollViewHeight          = titleScrollViewHeight;
     return item;
 }
 
 typedef struct  {
-    YYPagerUnderlineSizeType sizeType; // size大小类型
+    LLPagerUnderlineSizeType sizeType; // size大小类型
     UIColor *underlineColor;  //字体下方指示器颜色 默认[UIColor purpleColor]
     CGSize   underlineSize;   //字体下方指示器大小
     BOOL     isShowUnderline; //是否开启字体下方指示器 默认YES
     BOOL     isOpenStretch;   //是否开启指示器拉伸效果 默认YES
-} YYUnderLineCustomItem;
+} LLUnderLineCustomItem;
 
-CG_INLINE YYUnderLineCustomItem
-YYUnderLineCustomItemMake(YYPagerUnderlineSizeType sizeType,
+CG_INLINE LLUnderLineCustomItem
+LLUnderLineCustomItemMake(LLPagerUnderlineSizeType sizeType,
                           BOOL      isShowUnderline,
                           BOOL      isOpenStretch,
                           UIColor   *underlineColor,
                           CGSize    underlineSize) {
-    YYUnderLineCustomItem item;
+    LLUnderLineCustomItem item;
     item.sizeType           = sizeType;
     item.isShowUnderline    = isShowUnderline;
     item.isOpenStretch      = isOpenStretch;
@@ -56,14 +56,14 @@ typedef struct {
     CGFloat  dotFontSize;
     UIColor *backgroundColor;
     UIColor *textColor;
-} YYNotReadDotCustomItem;
+} LLNotReadDotCustomItem;
 
-CG_INLINE YYNotReadDotCustomItem
-YYNotReadDotCustomItemMake(BOOL isHidden,
+CG_INLINE LLNotReadDotCustomItem
+LLNotReadDotCustomItemMake(BOOL isHidden,
                            CGFloat dotFontSize,
                            UIColor *backgroundColor,
                            UIColor *textColor) {
-    YYNotReadDotCustomItem item;
+    LLNotReadDotCustomItem item;
     item.isHidden        = isHidden;
     item.dotFontSize     = dotFontSize;
     item.backgroundColor = backgroundColor;
@@ -82,13 +82,13 @@ typedef struct {
     BOOL     isOpenShade;     //是否开启字体渐变效果 默认NO
     BOOL     isAutoFitWidth;  //是否开启自动计算按钮宽度 默认NO (isAutoFitWidth优先级高于titleButtonWidth,当isAutoFitWidth=YES时，titleButtonWidth设置失效)
     
-} YYTitleButtonCustomItem;
+} LLTitleButtonCustomItem;
 
-CG_INLINE YYTitleButtonCustomItem
-YYTitleButtonCustomItemMake(BOOL    isAutoFitWidth,
+CG_INLINE LLTitleButtonCustomItem
+LLTitleButtonCustomItemMake(BOOL    isAutoFitWidth,
                             CGFloat titleButtonWidth,
                             CGFloat titlePagerMargin) {
-    YYTitleButtonCustomItem item;
+    LLTitleButtonCustomItem item;
     item.isAutoFitWidth   = isAutoFitWidth;
     item.titleButtonWidth = titleButtonWidth;
     item.titlePagerMargin = titlePagerMargin;
@@ -96,7 +96,7 @@ YYTitleButtonCustomItemMake(BOOL    isAutoFitWidth,
 }
 
 
-@interface YYPagerController : UIViewController
+@interface LLPagerController : UIViewController
 
 /// 按钮改变block
 @property (nonatomic ,copy) void (^titleButtonChangeClickBlock)(UIButton *fromButton, UIButton *toButton);
@@ -107,19 +107,19 @@ YYTitleButtonCustomItemMake(BOOL    isAutoFitWidth,
 
 /// 按钮承载视图配置
 /// @param titleScrollViewCustomItemBlock 配置回调
-- (void)settingTitleScrollViewCustomItem:(void (^)(YYTitleScrollViewCustomItem *item))titleScrollViewCustomItemBlock;
+- (void)settingTitleScrollViewCustomItem:(void (^)(LLTitleScrollViewCustomItem *item))titleScrollViewCustomItemBlock;
 
 /// 按钮配置
 /// @param titleButtonCustomItemBlock 配置回调
-- (void)settingTitleButtonCustomItem:(void (^)(YYTitleButtonCustomItem *item))titleButtonCustomItemBlock;
+- (void)settingTitleButtonCustomItem:(void (^)(LLTitleButtonCustomItem *item))titleButtonCustomItemBlock;
 
 /// 未读消息视图配置
 /// @param notReadDotCustomItemBlock 配置回调
-- (void)settingNotReadDotCustomItem:(void (^)(YYNotReadDotCustomItem *item))notReadDotCustomItemBlock;
+- (void)settingNotReadDotCustomItem:(void (^)(LLNotReadDotCustomItem *item))notReadDotCustomItemBlock;
 
 /// 选择指示器配置
 /// @param underLineCustomItemBlock 配置回调
-- (void)settingUnderLineCustomItem:(void (^)(YYUnderLineCustomItem *item))underLineCustomItemBlock;
+- (void)settingUnderLineCustomItem:(void (^)(LLUnderLineCustomItem *item))underLineCustomItemBlock;
 
 /// 刷新按钮上 扩展数据（未读标识）
 /// @param dotText 标识展示数据
@@ -131,7 +131,7 @@ YYTitleButtonCustomItemMake(BOOL    isAutoFitWidth,
 
 @end
 
-@interface YYPagerUnderline : UIView
+@interface LLPagerUnderline : UIView
 /** 进度条 */
 @property (nonatomic, assign) CGFloat progress;
 /** 尺寸 */
@@ -144,16 +144,16 @@ YYTitleButtonCustomItemMake(BOOL    isAutoFitWidth,
 @end
 
 
-@interface YYPagerConsts : NSObject
+@interface LLPagerConsts : NSObject
 
 
 /** 按钮tag附加值 */
-UIKIT_EXTERN NSInteger const YYButtonTagValue;
+UIKIT_EXTERN NSInteger const LLButtonTagValue;
 
-CGSize YYScreenSize(void);
+CGSize LLScreenSize(void);
 
 //色值
-#define YYRGBA(r,g,b,a) [UIColor colorWithRed:r green:g blue:b alpha:a]
+#define LLRGBA(r,g,b,a) [UIColor colorWithRed:r green:g blue:b alpha:a]
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
 #define RGB(r,g,b) RGBA(r,g,b,1.0f)
 #define RandColor RGB(arc4random_uniform(255), arc4random_uniform(255), arc4random_uniform(255))

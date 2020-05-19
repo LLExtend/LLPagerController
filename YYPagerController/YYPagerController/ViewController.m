@@ -1,14 +1,14 @@
 //
 //  ViewController.m
-//  YYPagerController
+//  LLPagerController
 //
 //  Created by MAC on 2017/10/18.
 //  Copyright © 2017年 MAC. All rights reserved.
 //
 
 #import "ViewController.h"
-#import "YYPagerController.h"
-#import "YYPagerSubController.h"
+#import "LLPagerController.h"
+#import "LLPagerSubController.h"
 @interface ViewController ()
 
 @end
@@ -18,11 +18,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"YYPagerController";
+    self.title = @"LLPagerController";
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    YYPagerSubController *page = [[YYPagerSubController alloc] init];
+    LLPagerSubController *page = [[LLPagerSubController alloc] init];
     [self.navigationController pushViewController:page animated:YES];
 }
 

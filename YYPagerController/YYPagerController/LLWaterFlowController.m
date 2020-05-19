@@ -1,19 +1,19 @@
 //
-//  YYWaterFlowController.m
-//  YYWeiBoPersonView
+//  LLWaterFlowController.m
+//  LLWeiBoPersonView
 //
 //  Created by MAC on 2017/10/18.
 //  Copyright © 2017年 MAC. All rights reserved.
 //
 
-#import "YYWaterFlowController.h"
+#import "LLWaterFlowController.h"
 
 static NSString *const reuseIdentifier = @"collectionCell";
-@interface YYWaterFlowController () <UICollectionViewDelegate ,UICollectionViewDataSource>
+@interface LLWaterFlowController () <UICollectionViewDelegate ,UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView * collectionView;
 @end
 
-@implementation YYWaterFlowController
+@implementation LLWaterFlowController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,13 +26,13 @@ static NSString *const reuseIdentifier = @"collectionCell";
 }
 
 - (void)initCollectionView {
-    YYWaterFlowLayout *flowLayout = [[YYWaterFlowLayout alloc] init];
+    LLWaterFlowLayout *flowLayout = [[LLWaterFlowLayout alloc] init];
     flowLayout.padding = 5;
     flowLayout.columnCount = arc4random()%4+1;
     flowLayout.cellMaxHeight = 200;
     flowLayout.cellMinHeight = 100;
     
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, YYScreenWidth(), YYScreenHeight()) collectionViewLayout:flowLayout];
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, LLScreenWidth(), LLScreenHeight()) collectionViewLayout:flowLayout];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     //设置代理
@@ -71,7 +71,7 @@ static NSString *const reuseIdentifier = @"collectionCell";
 
 
 
-@implementation YYWaterFlowLayout {
+@implementation LLWaterFlowLayout {
     //section的数量
     NSInteger _numberOfSections;
     //section中cell的数量
@@ -150,7 +150,7 @@ static NSString *const reuseIdentifier = @"collectionCell";
 - (CGSize)collectionViewContentSize {
     //cellYArray数组中的最大值
     CGFloat maxY = [[_cellYArray valueForKeyPath:@"@max.floatValue"] floatValue];
-    return CGSizeMake(YYScreenWidth(), maxY);
+    return CGSizeMake(LLScreenWidth(), maxY);
 }
 
 /**
@@ -158,7 +158,7 @@ static NSString *const reuseIdentifier = @"collectionCell";
  */
 - (void)initCellWidth {
     //计算每个cell的宽度
-    _cellWidth = (YYScreenWidth() - (_columnCount -1) * _padding) / _columnCount;
+    _cellWidth = (LLScreenWidth() - (_columnCount -1) * _padding) / _columnCount;
     
     //为每个cell计算X坐标
     _cellXArray = [[NSMutableArray alloc] initWithCapacity:_columnCount];
@@ -208,11 +208,11 @@ static NSString *const reuseIdentifier = @"collectionCell";
     return minIndex;
 }
 
-CGFloat YYScreenWidth(void) {
+CGFloat LLScreenWidth(void) {
     return [UIScreen mainScreen].bounds.size.width;
 }
 
-CGFloat YYScreenHeight(void) {
+CGFloat LLScreenHeight(void) {
     return [UIScreen mainScreen].bounds.size.height;
 }
 
