@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  YYPagerController
+//  LLPagerController
 //
 //  Created by MAC on 2017/10/18.
 //  Copyright © 2017年 MAC. All rights reserved.

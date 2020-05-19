@@ -450,7 +450,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6ETLK4ZD4J;
-				INFOPLIST_FILE = YYPagerController/Info.plist;
+				INFOPLIST_FILE = LLPagerController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = parents.LLPagerController;
@@ -465,7 +465,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6ETLK4ZD4J;
-				INFOPLIST_FILE = YYPagerController/Info.plist;
+				INFOPLIST_FILE = LLPagerController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = parents.LLPagerController;
@@ -480,9 +480,9 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6ETLK4ZD4J;
-				INFOPLIST_FILE = YYPagerControllerTests/Info.plist;
+				INFOPLIST_FILE = LLPagerControllerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = parents.YYPagerControllerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = parents.LLPagerControllerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LLPagerController.app/LLPagerController";
@@ -495,9 +495,9 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6ETLK4ZD4J;
-				INFOPLIST_FILE = YYPagerControllerTests/Info.plist;
+				INFOPLIST_FILE = LLPagerControllerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = parents.YYPagerControllerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = parents.LLPagerControllerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LLPagerController.app/LLPagerController";
@@ -509,12 +509,12 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6ETLK4ZD4J;
-				INFOPLIST_FILE = YYPagerControllerUITests/Info.plist;
+				INFOPLIST_FILE = LLPagerControllerUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = parents.YYPagerControllerUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = parents.LLPagerControllerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = YYPagerController;
+				TEST_TARGET_NAME = LLPagerController;
 			};
 			name = Debug;
 		};
@@ -523,12 +523,12 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6ETLK4ZD4J;
-				INFOPLIST_FILE = YYPagerControllerUITests/Info.plist;
+				INFOPLIST_FILE = LLPagerControllerUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = parents.YYPagerControllerUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = parents.LLPagerControllerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = YYPagerController;
+				TEST_TARGET_NAME = LLPagerController;
 			};
 			name = Release;
 		};
