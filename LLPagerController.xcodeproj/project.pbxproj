@@ -149,8 +149,8 @@
 		18B8BD08247622EC0079D356 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				18B8BD09247622EC0079D356 /* LLPagerController.m */,
 				18B8BD0A247622EC0079D356 /* LLPagerController.h */,
+				18B8BD09247622EC0079D356 /* LLPagerController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";

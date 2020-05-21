@@ -221,7 +221,7 @@ UIKIT_STATIC_INLINE NSValue * LLUnderLineFrame(LLPagerUnderlineSizeType sizeType
             
             CATextLayer *textLayer = CATextLayer.layer;
             
-            textLayer.string = [NSString stringWithFormat:@"%ld",titleButton.tag - LLButtonTagValue];
+            textLayer.string = [NSString stringWithFormat:@"%ld",(long)(titleButton.tag - LLButtonTagValue)];
             textLayer.fontSize = _dotItem.dotFontSize;
             
             // 设置frame
@@ -338,37 +338,44 @@ UIKIT_STATIC_INLINE NSValue * LLUnderLineFrame(LLPagerUnderlineSizeType sizeType
     
     // 标题居中
     CGFloat offsetX = LLValueBorder(button.center.x - LLScreenSize().width * 0.5, _titleScrollView.contentSize.width - LLScreenSize().width);
-    NSInteger buttonTag = button.tag - LLButtonTagValue;
     [UIView animateWithDuration:.25 animations:^{
         // 最后一个按钮的坐标maxX <= 父容器_titleScrollView宽度时，不设置偏移
-        UIButton *button = self.titleButtonArray.lastObject;
-        if (CGRectGetMaxX(button.frame) > CGRectGetWidth(_titleScrollView.frame)) {
-            [_titleScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
-        }
+        [self titleScrollViewOffset:offsetX];
         
     } completion:^(BOOL finished) {
         if (finished) {
-            
-            // 滚动到相应的位置
-            [_contentScrollView setContentOffset:CGPointMake(buttonTag * LLScreenSize().width, 0) animated:YES];
-            
-            // 添加控制器View
-            [self addChildViewForIndex:buttonTag];
-            
-            if (self.titleButtonChangeClickBlock) {
-                self.titleButtonChangeClickBlock(_lastSelectButton, button);
-            }
-            
-            // 点击按钮时 缩放功能 单独处理，不受scrollViewDidScroll:处理
-            if (!_pagerUnderline.isStretch) {
-                _lastSelectButton.transform = CGAffineTransformIdentity;
-                button.transform = CGAffineTransformMakeScale(1 + _titleButtonItem.titleScale, 1 + _titleButtonItem.titleScale);
-            }
-            
-            _lastSelectButton = button;
-            _pagerUnderline.isStretch = NO;
+            [self animateFinished:button];
         }
     }];
+}
+
+- (void)titleScrollViewOffset:(CGFloat)offsetX {
+    UIButton *button = self.titleButtonArray.lastObject;
+    if (CGRectGetMaxX(button.frame) > CGRectGetWidth(_titleScrollView.frame)) {
+        [_titleScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    }
+}
+
+- (void)animateFinished:(UIButton *)button {
+    NSInteger buttonTag = button.tag - LLButtonTagValue;
+    // 滚动到相应的位置
+    [_contentScrollView setContentOffset:CGPointMake(buttonTag * LLScreenSize().width, 0) animated:YES];
+    
+    // 添加控制器View
+    [self addChildViewForIndex:buttonTag];
+    
+    if (self.titleButtonChangeClickBlock) {
+        self.titleButtonChangeClickBlock(_lastSelectButton, button);
+    }
+    
+    // 点击按钮时 缩放功能 单独处理，不受scrollViewDidScroll:处理
+    if (!_pagerUnderline.isStretch) {
+        _lastSelectButton.transform = CGAffineTransformIdentity;
+        button.transform = CGAffineTransformMakeScale(1 + _titleButtonItem.titleScale, 1 + _titleButtonItem.titleScale);
+    }
+    
+    _lastSelectButton = button;
+    _pagerUnderline.isStretch = NO;
 }
 
 #pragma mark - 底部滚动条滚动
