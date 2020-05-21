@@ -4,7 +4,7 @@ Pod::Spec.new do |spec|
     spec.name         = "LLPagerController"
 
     # 版本号
-    spec.version      = "1.0.0"
+    spec.version      = "1.0.1"
 
     # 简短描述
     spec.summary      = "仿今日头条标题pageController"
