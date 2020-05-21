@@ -336,15 +336,18 @@ UIKIT_STATIC_INLINE NSValue * LLUnderLineFrame(LLPagerUnderlineSizeType sizeType
     [_lastSelectButton setTitleColor:_titleButtonItem.normalColor ?: LLButtonNormalColor forState:UIControlStateNormal];
     [button setTitleColor:_titleButtonItem.selectedColor ?: LLButtonSelectedColor forState:UIControlStateNormal];
     
+    __weak typeof(self) weakself = self;
     // 标题居中
     CGFloat offsetX = LLValueBorder(button.center.x - LLScreenSize().width * 0.5, _titleScrollView.contentSize.width - LLScreenSize().width);
     [UIView animateWithDuration:.25 animations:^{
+        __strong typeof(weakself) strongSelf = weakself;
         // 最后一个按钮的坐标maxX <= 父容器_titleScrollView宽度时，不设置偏移
-        [self titleScrollViewOffset:offsetX];
+        [strongSelf titleScrollViewOffset:offsetX];
         
     } completion:^(BOOL finished) {
         if (finished) {
-            [self animateFinished:button];
+            __strong typeof(weakself) strongSelf = weakself;
+            [strongSelf animateFinished:button];
         }
     }];
 }
