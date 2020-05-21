@@ -68,8 +68,8 @@ const UIColor *LLButtonSelectedColor;
 
 
 /// 计算标题居中需要的偏移量
-UIKIT_STATIC_INLINE CGFloat LLValueBorder (CGFloat underBorder,
-                                           CGFloat topBorder) {
+UIKIT_STATIC_INLINE CGFloat LLValueBorder(CGFloat underBorder,
+                                          CGFloat topBorder) {
     underBorder = (underBorder < 0 ? 0 : underBorder);
     return underBorder > topBorder ? topBorder : underBorder;
 }
@@ -95,8 +95,7 @@ UIKIT_STATIC_INLINE CGFloat LLTitleWidthHandle(CGFloat titleButtons,
 /// @param sizeType 类型
 /// @param underlineSize 外部设置size（LLPagerUnderlineSizeType_followButton|LLPagerUnderlineSizeType_followTitleLabel 模式下 此设置只针对高度生效）
 /// @param followButton 当前按钮
-UIKIT_STATIC_INLINE NSValue * LLUnderLineFrame(
-                                               LLPagerUnderlineSizeType sizeType,
+UIKIT_STATIC_INLINE NSValue * LLUnderLineFrame(LLPagerUnderlineSizeType sizeType,
                                                CGSize underlineSize,
                                                UIButton *followButton) {
     CGFloat frameX = 0;
@@ -223,7 +222,7 @@ UIKIT_STATIC_INLINE NSValue * LLUnderLineFrame(
             CATextLayer *textLayer = CATextLayer.layer;
             
             textLayer.string = [NSString stringWithFormat:@"%ld",titleButton.tag - LLButtonTagValue];
-            textLayer.fontSize = _dotItem.dotFontSize;//_dotFontSize;
+            textLayer.fontSize = _dotItem.dotFontSize;
             
             // 设置frame
             [self autolayoutFrameWithButton:titleButton textlayer:textLayer];

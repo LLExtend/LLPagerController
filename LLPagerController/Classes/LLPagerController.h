@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger ,LLPagerUnderlineSizeType) {
     LLPagerUnderlineSizeType_underSize
 };
 
-typedef struct  {
+typedef struct __attribute__((objc_boxable)) {
     UIColor *titleScrollViewBackgroundColor;
     CGFloat  titleScrollViewHeight;
 } LLTitleScrollViewCustomItem;
@@ -28,7 +28,7 @@ LLTitleScrollViewCustomItemMake(UIColor *titleScrollViewBackgroundColor,
     return item;
 }
 
-typedef struct  {
+typedef struct __attribute__((objc_boxable)) {
     LLPagerUnderlineSizeType sizeType; // size大小类型
     UIColor *underlineColor;  //字体下方指示器颜色 默认[UIColor purpleColor]
     CGSize   underlineSize;   //字体下方指示器大小
@@ -51,7 +51,7 @@ LLUnderLineCustomItemMake(LLPagerUnderlineSizeType sizeType,
     return item;
 }
 
-typedef struct {
+typedef struct __attribute__((objc_boxable)) {
     BOOL     isHidden;
     CGFloat  dotFontSize;
     UIColor *backgroundColor;
@@ -71,7 +71,7 @@ LLNotReadDotCustomItemMake(BOOL isHidden,
     return item;
 }
 
-typedef struct {
+typedef struct __attribute__((objc_boxable)) {
     UIColor *normalColor;     //标题字体未选中状态下颜色 默认[UIColor darkGrayColor]
     UIColor *selectedColor;   //标题字体选中状态下颜色 默认[UIColor orangeColor]
     UIFont  *titleButtonFont; //标题字体大小 默认[UIFont systemFontOfSize:15]

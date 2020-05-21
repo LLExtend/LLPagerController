@@ -15,9 +15,9 @@
 		04195DB81F97339900F37AF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04195DB71F97339900F37AF3 /* main.m */; };
 		04195DC21F97339900F37AF3 /* LLPagerControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04195DC11F97339900F37AF3 /* LLPagerControllerTests.m */; };
 		04195DCD1F97339900F37AF3 /* LLPagerControllerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04195DCC1F97339900F37AF3 /* LLPagerControllerUITests.m */; };
-		04195DDC1F97345200F37AF3 /* LLPagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04195DDB1F97345200F37AF3 /* LLPagerController.m */; };
 		04195DE11F9734BC00F37AF3 /* LLWaterFlowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04195DDF1F9734BC00F37AF3 /* LLWaterFlowController.m */; };
 		04195DE21F9734BC00F37AF3 /* LLPagerSubController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04195DE01F9734BC00F37AF3 /* LLPagerSubController.m */; };
+		18B8BD0B247622EC0079D356 /* LLPagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B8BD09247622EC0079D356 /* LLPagerController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,12 +54,12 @@
 		04195DC81F97339900F37AF3 /* LLPagerControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLPagerControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04195DCC1F97339900F37AF3 /* LLPagerControllerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLPagerControllerUITests.m; sourceTree = "<group>"; };
 		04195DCE1F97339900F37AF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04195DDA1F97345200F37AF3 /* LLPagerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLPagerController.h; sourceTree = "<group>"; };
-		04195DDB1F97345200F37AF3 /* LLPagerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLPagerController.m; sourceTree = "<group>"; };
 		04195DDD1F9734BC00F37AF3 /* LLPagerSubController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLPagerSubController.h; sourceTree = "<group>"; };
 		04195DDE1F9734BC00F37AF3 /* LLWaterFlowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLWaterFlowController.h; sourceTree = "<group>"; };
 		04195DDF1F9734BC00F37AF3 /* LLWaterFlowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLWaterFlowController.m; sourceTree = "<group>"; };
 		04195DE01F9734BC00F37AF3 /* LLPagerSubController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLPagerSubController.m; sourceTree = "<group>"; };
+		18B8BD09247622EC0079D356 /* LLPagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLPagerController.m; sourceTree = "<group>"; };
+		18B8BD0A247622EC0079D356 /* LLPagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLPagerController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,14 +110,13 @@
 		04195DA71F97339900F37AF3 /* LLPagerController */ = {
 			isa = PBXGroup;
 			children = (
-				04195DDA1F97345200F37AF3 /* LLPagerController.h */,
-				04195DDB1F97345200F37AF3 /* LLPagerController.m */,
+				04195DA81F97339900F37AF3 /* AppDelegate.h */,
+				04195DA91F97339900F37AF3 /* AppDelegate.m */,
+				18B8BD08247622EC0079D356 /* Classes */,
 				04195DDD1F9734BC00F37AF3 /* LLPagerSubController.h */,
 				04195DE01F9734BC00F37AF3 /* LLPagerSubController.m */,
 				04195DDE1F9734BC00F37AF3 /* LLWaterFlowController.h */,
 				04195DDF1F9734BC00F37AF3 /* LLWaterFlowController.m */,
-				04195DA81F97339900F37AF3 /* AppDelegate.h */,
-				04195DA91F97339900F37AF3 /* AppDelegate.m */,
 				04195DAB1F97339900F37AF3 /* ViewController.h */,
 				04195DAC1F97339900F37AF3 /* ViewController.m */,
 				04195DAE1F97339900F37AF3 /* Main.storyboard */,
@@ -145,6 +144,15 @@
 				04195DCE1F97339900F37AF3 /* Info.plist */,
 			);
 			path = LLPagerControllerUITests;
+			sourceTree = "<group>";
+		};
+		18B8BD08247622EC0079D356 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				18B8BD09247622EC0079D356 /* LLPagerController.m */,
+				18B8BD0A247622EC0079D356 /* LLPagerController.h */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,11 +289,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				04195DAD1F97339900F37AF3 /* ViewController.m in Sources */,
+				18B8BD0B247622EC0079D356 /* LLPagerController.m in Sources */,
 				04195DB81F97339900F37AF3 /* main.m in Sources */,
 				04195DE21F9734BC00F37AF3 /* LLPagerSubController.m in Sources */,
 				04195DAA1F97339900F37AF3 /* AppDelegate.m in Sources */,
 				04195DE11F9734BC00F37AF3 /* LLWaterFlowController.m in Sources */,
-				04195DDC1F97345200F37AF3 /* LLPagerController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
