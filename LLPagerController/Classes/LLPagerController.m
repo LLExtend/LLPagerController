@@ -186,12 +186,13 @@ UIKIT_STATIC_INLINE NSValue * LLUnderLineFrame(LLPagerUnderlineSizeType sizeType
     NSInteger childControllerCount = self.childViewControllers.count;
     
     // 标题button坐标
-    __block CGFloat buttonX = 0;
-    __block CGFloat buttonW = 0;
+    CGFloat buttonX = 0;
+    CGFloat buttonW = 0;
     CGFloat buttonY = 0;
     CGFloat buttonH = _titleScrollViewItem.titleScrollViewHeight;
-
-    [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    
+    for (int idx = 0; idx < childControllerCount; idx++) {
+        UIViewController *obj = self.childViewControllers[idx];
         // 初始化 标题按钮
         UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [titleButton setTitle:obj.title forState:UIControlStateNormal];
@@ -202,7 +203,7 @@ UIKIT_STATIC_INLINE NSValue * LLUnderLineFrame(LLPagerUnderlineSizeType sizeType
         titleButton.tag = idx + LLButtonTagValue;
         [self.titleScrollView addSubview:titleButton];
         [self.titleButtonArray addObject:titleButton];
-        
+
         if (_titleButtonItem.isAutoFitWidth) {
             [titleButton sizeToFit];
             buttonX = buttonX + buttonW + _titleButtonItem.titlePagerMargin;
@@ -212,18 +213,18 @@ UIKIT_STATIC_INLINE NSValue * LLUnderLineFrame(LLPagerUnderlineSizeType sizeType
             buttonW = LLTitleWidthHandle(childControllerCount, _titleButtonItem.titleButtonWidth);
         }
         titleButton.frame = CGRectMake(buttonX, buttonY, buttonW, buttonH);
-        
+
         // 进度线 frame 处理
         NSValue *underlineRectValue = LLUnderLineFrame(_underLineItem.sizeType, _underLineItem.underlineSize, titleButton);
         [self.underlineFrames addObject:underlineRectValue];
 
         if (!_dotItem.isHidden) {
-            
+
             CATextLayer *textLayer = CATextLayer.layer;
-            
+
             textLayer.string = [NSString stringWithFormat:@"%ld",(long)(titleButton.tag - LLButtonTagValue)];
             textLayer.fontSize = _dotItem.dotFontSize;
-            
+
             // 设置frame
             [self autolayoutFrameWithButton:titleButton textlayer:textLayer];
 
@@ -235,7 +236,7 @@ UIKIT_STATIC_INLINE NSValue * LLUnderLineFrame(LLPagerUnderlineSizeType sizeType
             textLayer.foregroundColor = _dotItem.textColor ? _dotItem.textColor.CGColor:UIColor.whiteColor.CGColor;
             [titleButton.layer addSublayer:textLayer];
         }
-    }];
+    }
     
     // 设置标题是否可以滚动
     _titleScrollView.contentSize = CGSizeMake(_titleButtonItem.isAutoFitWidth ? buttonX + buttonW + _titleButtonItem.titlePagerMargin : childControllerCount * buttonW, 0);
