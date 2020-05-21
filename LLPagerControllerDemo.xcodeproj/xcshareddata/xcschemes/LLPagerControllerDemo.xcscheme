@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "04195DA41F97339900F37AF3"
-               BuildableName = "LLPagerController.app"
-               BlueprintName = "LLPagerController"
-               ReferencedContainer = "container:LLPagerController.xcodeproj">
+               BuildableName = "LLPagerControllerDemo.app"
+               BlueprintName = "LLPagerControllerDemo"
+               ReferencedContainer = "container:LLPagerControllerDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,26 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "04195DBC1F97339900F37AF3"
-               BuildableName = "LLPagerControllerTests.xctest"
-               BlueprintName = "LLPagerControllerTests"
-               ReferencedContainer = "container:LLPagerController.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "04195DC71F97339900F37AF3"
-               BuildableName = "LLPagerControllerUITests.xctest"
-               BlueprintName = "LLPagerControllerUITests"
-               ReferencedContainer = "container:LLPagerController.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -65,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "04195DA41F97339900F37AF3"
-            BuildableName = "LLPagerController.app"
-            BlueprintName = "LLPagerController"
-            ReferencedContainer = "container:LLPagerController.xcodeproj">
+            BuildableName = "LLPagerControllerDemo.app"
+            BlueprintName = "LLPagerControllerDemo"
+            ReferencedContainer = "container:LLPagerControllerDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -82,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "04195DA41F97339900F37AF3"
-            BuildableName = "LLPagerController.app"
-            BlueprintName = "LLPagerController"
-            ReferencedContainer = "container:LLPagerController.xcodeproj">
+            BuildableName = "LLPagerControllerDemo.app"
+            BlueprintName = "LLPagerControllerDemo"
+            ReferencedContainer = "container:LLPagerControllerDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
