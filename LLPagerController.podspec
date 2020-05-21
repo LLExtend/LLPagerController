@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
     spec.summary      = "仿今日头条标题pageController"
 
     # 开源库地址
-    spec.homepage     = "https://github.com/LLExtend/LLPagerControllerDemo"
+    spec.homepage     = "https://github.com/LLExtend/LLPagerController"
 
     # 开源协议
     spec.license      = { :type => "MIT", :file => "LICENSE" }
@@ -22,7 +22,7 @@ Pod::Spec.new do |spec|
     spec.platform     = :ios, "8.0"
 
     # 开源库Github路径
-    spec.source       = { :git => "https://github.com/LLExtend/LLPagerControllerDemo.git", :tag => "#{spec.version}" }
+    spec.source       = { :git => "https://github.com/LLExtend/LLPagerController.git", :tag => "#{spec.version}" }
 
     # 开源库资源文件
     spec.source_files  = "LLPagerController/Classes/*.{h,m}"
